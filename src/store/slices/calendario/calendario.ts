@@ -5,6 +5,7 @@ interface propsCalendarioSlice {
 	isLoading: boolean;
 	emociones: Emocion[];
 	isEmocionRegistrada: boolean;
+	emocion: Emocion;
 }
 
 export const calendarioSlice = createSlice({
@@ -13,6 +14,14 @@ export const calendarioSlice = createSlice({
 		isLoading: false,
 		emociones: [],
 		isEmocionRegistrada: false,
+		emocion: {
+			desencadenante: '',
+			notaDelDia: '',
+			emociones: [],
+			etiquetas: [],
+			fecha: '',
+			id: '',
+		},
 	} as propsCalendarioSlice,
 	reducers: {
 		startLoading: state => {
@@ -33,6 +42,10 @@ export const calendarioSlice = createSlice({
 			state.isEmocionRegistrada = payload;
 			state.isLoading = false;
 		},
+		getEmocionByFecha: (state, { payload }) => {
+			state.emocion = payload;
+			state.isLoading = false;
+		},
 	},
 });
 
@@ -42,4 +55,5 @@ export const {
 	getEmociones,
 	registrarEmocion,
 	setIsEmocionRegistrada,
+	getEmocionByFecha,
 } = calendarioSlice.actions;

@@ -2,9 +2,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { API_URL } from '@env';
 import { login, start, fail, register } from './auth';
+import { Dispatch } from '@reduxjs/toolkit';
 
 export const loginWithEmailPassword = ({ email, password }) => {
-	return async dispatch => {
+	return async (dispatch: Dispatch) => {
 		dispatch(start());
 
 		try {
@@ -24,7 +25,7 @@ export const loginWithEmailPassword = ({ email, password }) => {
 				data.nombreUsuario
 			);
 			return null;
-		} catch (error) {
+		} catch (error: any) {
 			dispatch(fail());
 			if (error.response.data.statusCode === 401) {
 				return error.response.data.message;
@@ -40,7 +41,7 @@ export const registerThunk = ({
 	password,
 	navigate,
 }) => {
-	return async dispatch => {
+	return async (dispatch: Dispatch) => {
 		dispatch(start());
 
 		try {
@@ -63,7 +64,7 @@ export const registerThunk = ({
 			);
 			navigate('FormularioInicial');
 			return null;
-		} catch (error) {
+		} catch (error: any) {
 			console.log(error.response.data);
 			dispatch(fail());
 			if (

@@ -1,24 +1,19 @@
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 import EjercicioCard from '../components/EjercicioCard';
 import Splash from './Splash';
 import { globalStyles } from '../styles/global';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
-import { getEjerciciosThunk } from '../store/slices/ejercicios/thunks';
-import { getEjerciciosFavoritosThunk } from '../store/slices/Perfil/thunks';
+import {
+	getEjerciciosRecomendadosThunk,
+	getEjerciciosThunk,
+} from '../store/slices/ejercicios/thunks';
 import { Colors } from '../constants/colors';
 
 const EjerciciosScreen = ({ navigation }) => {
-	// const { getEjercicios, ejercicios, loading } = useContext(GeneralContext);
-
-	const { ejercicios, isLoading } = useSelector(
-		(state: RootState) => state.ejercicios
-	);
-
-	const { ejerciciosFavoritos } = useSelector(
-		(state: RootState) => state.perfil
-	);
+	const { ejercicios, isLoading, ejerciciosRecomendados } =
+		useSelector((state: RootState) => state.ejercicios);
 
 	const dispatch = useDispatch();
 
@@ -26,30 +21,34 @@ const EjerciciosScreen = ({ navigation }) => {
 		dispatch(getEjerciciosThunk());
 	};
 
-	const getEjerciciosFavoritosOfUser = () => {
-		dispatch(getEjerciciosFavoritosThunk());
+	const getEjerciciosRecomendados = () => {
+		dispatch(getEjerciciosRecomendadosThunk());
 	};
 
 	useEffect(() => {
 		getEjercicios();
-		getEjerciciosFavoritosOfUser();
+		getEjerciciosRecomendados();
 	}, []);
 
 	if (isLoading) return <Splash />;
 
 	return (
 		<View style={[styles.container, globalStyles.screenContainer]}>
-			{/* !TODO - Personalizar Ejercicios en base a las respuestas del formulario inicial */}
 			<View style={styles.containerRecomendados}>
 				<Text style={styles.title}>Recomendados para ti</Text>
 
 				<FlatList
-					data={ejerciciosFavoritos}
+					data={ejerciciosRecomendados}
 					keyExtractor={ejercicio => ejercicio.id}
 					renderItem={({ item }) => <EjercicioCard item={item} />}
+					horizontal={true}
 					ListFooterComponent={() => (
 						<View style={{ marginBottom: 15 }}></View>
 					)}
+					ItemSeparatorComponent={() => (
+						<View style={{ width: 15 }}></View>
+					)}
+					showsHorizontalScrollIndicator={false}
 				/>
 			</View>
 
@@ -74,16 +73,15 @@ const styles = StyleSheet.create({
 	container: {
 		paddingHorizontal: 25,
 		flex: 1,
-		backgroundColor: '#fff',
+		backgroundColor: '#000',
 		gap: 20,
 	},
 	containerRecomendados: {
-		flex: 1,
 		gap: 5,
 	},
 	containerAllEjercicios: {
-		flex: 2.3,
 		gap: 5,
+		flex: 1,
 	},
 	title: {
 		fontWeight: '700',

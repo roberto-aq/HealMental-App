@@ -94,7 +94,9 @@ const LoginScreen = ({ navigation }) => {
 				/>
 				<View style={styles.containerSeparator}>
 					<View style={styles.separator}></View>
-					<Text style={{ fontSize: 16, fontWeight: 'bold' }}>o</Text>
+					<Text style={{ fontSize: 16, fontFamily: 'Quicksand700' }}>
+						O
+					</Text>
 					<View style={styles.separator}></View>
 				</View>
 				<ButtonForm
@@ -131,10 +133,10 @@ const styles = StyleSheet.create({
 	},
 	textLogo: {
 		color: Colors.secondary,
-		fontWeight: 'bold',
 		fontSize: 25,
 		textAlign: 'center',
 		marginBottom: 24,
+		fontFamily: 'Quicksand700',
 	},
 	containerInputs: {
 		gap: 30,
@@ -164,11 +166,11 @@ const styles = StyleSheet.create({
 		fontSize: 13,
 		justifyContent: 'center',
 		alignItems: 'center',
-		fontWeight: '500',
+		fontFamily: 'Quicksand500',
 	},
 	finalTextLink: {
 		color: Colors.primary,
-		fontWeight: 'bold',
 		fontSize: 13,
+		fontFamily: 'Quicksand700',
 	},
 });

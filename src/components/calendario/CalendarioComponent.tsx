@@ -1,5 +1,11 @@
 import { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import {
+	StyleSheet,
+	Text,
+	View,
+	Image,
+	TouchableOpacity,
+} from 'react-native';
 import { Colors } from '../../constants/colors';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,6 +13,7 @@ import { getEmocionesThunk } from '../../store/slices/calendario/thunks';
 import { RootState } from '../../store/store';
 import { emocionesImages } from '../../helpers/helpers';
 import Splash from '../../screens/Splash';
+import { useNavigation } from '@react-navigation/native';
 
 LocaleConfig.locales['es'] = {
 	monthNames: [
@@ -60,13 +67,11 @@ LocaleConfig.locales['es'] = {
 LocaleConfig.defaultLocale = 'es';
 
 const CalendarioComponent = () => {
-	const [selectedDate, setSelectedDate] = useState<string | null>(
-		null
-	);
-
 	const { emociones, isLoading } = useSelector(
 		(state: RootState) => state.calendario
 	);
+
+	const navigation = useNavigation();
 
 	const dispatch = useDispatch();
 
@@ -83,25 +88,13 @@ const CalendarioComponent = () => {
 				selectedDayBackgroundColor: '#333',
 				selectedDayTextColor: 'gray',
 				todayTextColor: '#00adf5',
-				arrowColor: '#00adf5',
+				arrowColor: Colors.primary,
 				textDayFontWeight: '300',
 				textDayHeaderFontWeight: '300',
 				textDayFontSize: 16,
 				textMonthFontWeight: 'bold',
 				textMonthFontSize: 16,
 				textDayHeaderFontSize: 16,
-			}}
-			// Manejo de la fecha seleccionada
-			onDayPress={day => {
-				setSelectedDate(day.dateString);
-			}}
-			// Marcadores (puedes añadir emojis o colores dependiendo del estado de ánimo)
-			markedDates={{
-				[selectedDate]: {
-					selected: true,
-					marked: true,
-					selectedColor: '#00adf5',
-				},
 			}}
 			dayComponent={({ date, state }) => {
 				const registroDelDia = emociones.find(registroEmocion => {
@@ -128,12 +121,21 @@ const CalendarioComponent = () => {
 						</Text>
 						<View style={styles.containerEmoji}>
 							{imagenEmocion ? (
-								<View style={styles.viewEmoji}>
+								<TouchableOpacity
+									style={styles.viewEmoji}
+									onPress={() => {
+										if (registroDelDia) {
+											navigation.navigate('DetalleEmocion', {
+												fecha: date?.dateString,
+											});
+										}
+									}}
+								>
 									<Image
 										style={styles.imageEmoji}
 										source={imagenEmocion}
 									/>
-								</View>
+								</TouchableOpacity>
 							) : (
 								<View
 									style={[
@@ -157,6 +159,7 @@ const styles = StyleSheet.create({
 	containerDay: {
 		alignItems: 'center',
 		gap: 5,
+		flex: 1,
 	},
 	textDay: {
 		color: Colors.secondary,
@@ -169,11 +172,12 @@ const styles = StyleSheet.create({
 		color: Colors.primary,
 	},
 	containerEmoji: {
-		// backgroundColor: 'green',
+		width: 40,
+		height: 40,
 	},
 	circle: {
-		width: 50,
-		height: 50,
+		width: '100%',
+		height: '100%',
 		backgroundColor: '#d3d3d3',
 		borderRadius: 500,
 	},
@@ -186,8 +190,8 @@ const styles = StyleSheet.create({
 		borderColor: Colors.primary,
 	},
 	viewEmoji: {
-		width: 50,
-		height: 50,
+		width: '100%',
+		height: '100%',
 		borderRadius: 500,
 		alignItems: 'center',
 		justifyContent: 'center',

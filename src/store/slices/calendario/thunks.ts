@@ -1,6 +1,7 @@
 import { Dispatch } from '@reduxjs/toolkit';
 import {
 	finishLoading,
+	getEmocionByFecha,
 	getEmociones,
 	registrarEmocion,
 	setIsEmocionRegistrada,
@@ -81,6 +82,27 @@ export const getEmocionHoyThunk = () => {
 			if (error.response?.statusCode === 404) {
 				dispatch(setIsEmocionRegistrada(false));
 			}
+			console.log(error.response.data);
+			dispatch(finishLoading());
+		}
+	};
+};
+
+export const getEmocionByFechaThunk = (fecha: string) => {
+	return async (dispatch: Dispatch) => {
+		dispatch(startLoading());
+		const token = await AsyncStorage.getItem('@token');
+		try {
+			const { data } = await api.get(
+				`${API_URL}/usuario/emociones/fecha/${fecha}`,
+				{
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			);
+			dispatch(getEmocionByFecha(data));
+		} catch (error: any) {
 			console.log(error.response.data);
 			dispatch(finishLoading());
 		}

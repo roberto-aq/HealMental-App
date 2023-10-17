@@ -1,4 +1,5 @@
 import { Colors } from '../constants/colors';
+import { emocionesImagesProps } from '../interfaces/props';
 
 export const formatDate = (dateString: string) => {
 	const date = new Date(dateString);
@@ -29,7 +30,7 @@ export const getColorByCategory = (categoria: string) => {
 	}
 };
 
-export const emocionesImages = {
+export const emocionesImages: emocionesImagesProps = {
 	Neutral: require('../../assets/emojis-calendario/icono-neutral.png'),
 	Cansado: require('../../assets/emojis-calendario/icono-cansado.png'),
 	Enojado: require('../../assets/emojis-calendario/icono-enojado.png'),

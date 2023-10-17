@@ -70,10 +70,12 @@ const styles = StyleSheet.create({
 	},
 
 	headerTitle: {
-		fontWeight: 'bold',
 		color: '#fff',
 		fontSize: 20,
+		fontFamily: 'Quicksand700',
+		width: '90%',
 		textAlign: 'center',
+		lineHeight: 30,
 	},
 	containerButtons: {
 		marginBottom: 20,

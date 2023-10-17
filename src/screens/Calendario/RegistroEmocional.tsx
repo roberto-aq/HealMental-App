@@ -120,6 +120,11 @@ const RegistroEmocional = () => {
 			.filter(emoji => emoji.checked)
 			.map(emoji => emoji.name);
 
+		if (emocionesSeleccionadas.length === 0) {
+			alert('Debe seleccionar al menos una emoción');
+			return;
+		}
+
 		dispatch(
 			guardarEmocionThunk(
 				emocionesSeleccionadas,
@@ -161,33 +166,65 @@ const RegistroEmocional = () => {
 					</View>
 
 					<View style={styles.containerNotaDelDia}>
-						<Text style={styles.textNotaDelDia}>Nota del Día:</Text>
+						<View
+							style={{
+								flexDirection: 'row',
+								alignItems: 'center',
+								justifyContent: 'space-between',
+							}}
+						>
+							<Text style={styles.textNotaDelDia}>Nota del Día:</Text>
+							<Text style={styles.textOptional}>Opcional</Text>
+						</View>
 						<TextInput
 							style={styles.inputNotaDelDia}
 							placeholder='Escribe un comentario'
 							value={notaDelDia}
 							onChangeText={newValue => setNotaDelDia(newValue)}
+							multiline
 						/>
 					</View>
 
 					<View style={styles.containerDesencadenante}>
-						<Text style={styles.textDesencadenante}>
-							Desencadenante:
-						</Text>
+						<View
+							style={{
+								flexDirection: 'row',
+								alignItems: 'center',
+								justifyContent: 'space-between',
+							}}
+						>
+							<Text style={styles.textDesencadenante}>
+								Desencadenante:
+							</Text>
+							<Text style={styles.textOptional}>Opcional</Text>
+						</View>
+
 						<TextInput
 							style={styles.inputDesencadenante}
 							placeholder='¿Que te hizó sentir así?'
 							value={desencadenante}
 							onChangeText={newValue => setDesencadenante(newValue)}
+							multiline
 						/>
 					</View>
 
 					<View style={styles.containerEtiquetas}>
-						<Text style={styles.textTitleEtiquetas}>Etiquetas:</Text>
+						<View
+							style={{
+								flexDirection: 'row',
+								alignItems: 'center',
+								justifyContent: 'space-between',
+							}}
+						>
+							<Text style={styles.textTitleEtiquetas}>
+								Etiquetas:
+							</Text>
+							<Text style={styles.textOptional}>Opcional</Text>
+						</View>
 						<View style={styles.containerEtiquetasBadge}>
 							{etiquetas.map((etiqueta, index) => (
 								<View style={styles.etiquetaBadge} key={index}>
-									<Text key={index} style={styles.textEtiquetaBadge}>
+									<Text style={styles.textEtiquetaBadge}>
 										{etiqueta}
 									</Text>
 									<Pressable
@@ -249,7 +286,7 @@ const styles = StyleSheet.create({
 	},
 	title: {
 		fontSize: 18,
-		fontWeight: 'bold',
+		fontFamily: 'Quicksand700',
 		color: Colors.secondary,
 	},
 	containerOptions: {
@@ -266,7 +303,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 	},
 	textOption: {
-		fontWeight: '500',
+		fontFamily: 'Quicksand600',
 		color: Colors.secondary,
 		fontSize: 13,
 		textAlign: 'center',
@@ -288,31 +325,45 @@ const styles = StyleSheet.create({
 	containerNotaDelDia: {
 		gap: 10,
 	},
-	textNotaDelDia: {},
+	textNotaDelDia: {
+		color: Colors.secondary,
+		fontFamily: 'Quicksand700',
+		fontSize: 18,
+	},
 	inputNotaDelDia: {
 		borderWidth: 1,
 		borderColor: '#e1e1e1',
-		borderRadius: 10,
-		height: 80,
-		justifyContent: 'flex-start',
+		borderRadius: 12,
+		height: 85,
 		paddingHorizontal: 15,
+		textAlignVertical: 'top',
+		paddingVertical: 10,
 	},
 	containerDesencadenante: {
 		gap: 10,
 	},
-	textDesencadenante: {},
+	textDesencadenante: {
+		color: Colors.secondary,
+		fontFamily: 'Quicksand700',
+		fontSize: 18,
+	},
 	inputDesencadenante: {
 		borderWidth: 1,
 		borderColor: '#e1e1e1',
-		borderRadius: 10,
-		height: 80,
-		justifyContent: 'flex-start',
+		borderRadius: 12,
+		height: 85,
 		paddingHorizontal: 15,
+		textAlignVertical: 'top',
+		paddingVertical: 10,
 	},
 	containerEtiquetas: {
 		gap: 10,
 	},
-	textTitleEtiquetas: {},
+	textTitleEtiquetas: {
+		color: Colors.secondary,
+		fontFamily: 'Quicksand700',
+		fontSize: 18,
+	},
 	containerEtiquetasBadge: {
 		flexDirection: 'row',
 		gap: 10,
@@ -360,6 +411,12 @@ const styles = StyleSheet.create({
 	},
 	textBoton: {
 		color: Colors.light,
+	},
+	textOptional: {
+		color: Colors.dark,
+		fontFamily: 'Quicksand700',
+		fontSize: 16,
+		marginRight: 10,
 	},
 	buttonGuardar: {
 		height: 45,

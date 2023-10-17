@@ -22,6 +22,9 @@ export const formularioInicialSlice = createSlice({
 		isLoading: false,
 	},
 	reducers: {
+		startLoading: state => {
+			state.isLoading = true;
+		},
 		setSeleccionPrimeraPregunta: (state, { payload }) => {
 			state.seleccionPrimerPregunta = payload;
 		},
@@ -35,6 +38,9 @@ export const formularioInicialSlice = createSlice({
 			state.seleccionTerceraPregunta[index].checked =
 				!state.seleccionTerceraPregunta[index].checked;
 		},
+		finishLoading: state => {
+			state.isLoading = false;
+		},
 	},
 });
 
@@ -42,4 +48,6 @@ export const {
 	setSeleccionPrimeraPregunta,
 	toggleSeleccionSegundaPregunta,
 	toggleSeleccionTerceraPregunta,
+	startLoading,
+	finishLoading,
 } = formularioInicialSlice.actions;

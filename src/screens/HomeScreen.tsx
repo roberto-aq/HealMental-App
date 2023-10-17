@@ -5,6 +5,7 @@ import AfirmacionCard from '../components/AfirmacionCard';
 import ContainerLogo from '../components/ContainerLogo';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
+import { useFonts } from 'expo-font';
 
 const HomeScreen = ({ navigation }) => {
 	const { nombreUsuario } = useSelector(
@@ -14,7 +15,17 @@ const HomeScreen = ({ navigation }) => {
 	return (
 		<View style={[globalStyles.screenContainer, styles.container]}>
 			<ContainerLogo />
-			<Text>Saludos, {nombreUsuario}!</Text>
+			<Text style={{ fontFamily: 'Quicksand400', fontSize: 20 }}>
+				Saludos,{' '}
+				<Text
+					style={{
+						fontFamily: 'Quicksand700',
+						textTransform: 'capitalize',
+					}}
+				>
+					{nombreUsuario}!
+				</Text>
+			</Text>
 			<AfirmacionCard />
 		</View>
 	);

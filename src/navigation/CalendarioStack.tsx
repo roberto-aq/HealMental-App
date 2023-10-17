@@ -33,6 +33,7 @@ export default function CalendarioStack() {
 			<Stack.Screen
 				name='DetalleEmocion'
 				component={DetalleRegistroScreen}
+				options={{ title: 'Detalle de Emoción' }}
 			/>
 		</Stack.Navigator>
 	);

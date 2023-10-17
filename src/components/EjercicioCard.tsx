@@ -1,9 +1,17 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import {
+	Pressable,
+	StyleSheet,
+	Text,
+	View,
+	Dimensions,
+} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Ejercicio } from '../interfaces/ejercicioApi';
 import { getColorByCategory, shortenText } from '../helpers/helpers';
 import ButtonFavorite from './Perfil/ButtonFavorite';
 import { Colors } from '../constants/colors';
+
+const screenWidth = Dimensions.get('window').width;
 
 const EjercicioCard: React.FC<{
 	item: Ejercicio;
@@ -36,9 +44,7 @@ const EjercicioCard: React.FC<{
 				</View>
 			</Pressable>
 			<View style={styles.overlay}>
-				<ButtonFavorite
-					ejercicioId={item.id}
-				/>
+				<ButtonFavorite ejercicioId={item.id} />
 			</View>
 			<View style={styles.pseudoAfter}></View>
 		</View>
@@ -55,6 +61,7 @@ const styles = StyleSheet.create({
 		borderRadius: 15,
 		overflow: 'hidden',
 		height: 140,
+		width: screenWidth - 50,
 	},
 	card: {
 		// backgroundColor: Colors.primary,
@@ -70,7 +77,7 @@ const styles = StyleSheet.create({
 	pseudoAfter: {
 		width: 24,
 		backgroundColor: Colors.secondary,
-		opacity: 0.9,
+		// opacity: 0.9,hg
 		height: 140,
 		zIndex: 100,
 		position: 'absolute',

@@ -20,7 +20,7 @@ const PerfilScreen = ({ navigation }) => {
 			<View style={styles.containerButtons}>
 				<ButtonPerfil
 					title='Datos Personales'
-					path='Notas'
+					path='DatosPersonales'
 					navigation={navigation}
 				/>
 				<ButtonPerfil

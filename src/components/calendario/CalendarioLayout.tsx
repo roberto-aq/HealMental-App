@@ -84,6 +84,7 @@ const styles = StyleSheet.create({
 		color: Colors.secondary,
 		fontSize: 12,
 		fontWeight: '500',
+		fontFamily: 'Quicksand700',
 	},
 	buttonActive: {
 		backgroundColor: Colors.primary,

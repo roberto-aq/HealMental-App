@@ -1,11 +1,5 @@
 import { useState } from 'react';
-import {
-	StyleSheet,
-	Text,
-	View,
-	Image,
-	Pressable,
-} from 'react-native';
+import { StyleSheet, Text, View, Pressable } from 'react-native';
 import { globalStyles } from '../styles/global';
 import { Colors } from '../constants/colors';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -15,18 +9,49 @@ import ThirdForm from '../components/formularioInicial/ThirdForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import { setFirstLogin } from '../store/slices/auth/auth';
+import { guardarRespuestasThunk } from '../store/slices/formularioInicial/thunks';
+import Splash from './Splash';
 
 const FormularioInicial = () => {
 	const { firstLogin, status } = useSelector(
 		(state: RootState) => state.auth
 	);
 
+	const {
+		isLoading,
+		seleccionPrimerPregunta,
+		seleccionSegundaPregunta,
+		seleccionTerceraPregunta,
+	} = useSelector((state: RootState) => state.formularioInicial);
+
 	const dispatch = useDispatch();
 
 	const [actualForm, setActualForm] = useState(1);
 
+	const isFormComplete = (formNumber: number) => {
+		switch (formNumber) {
+			case 1:
+				// Aquí puedes agregar la validación para el FirstForm si es necesario.
+				return true;
+			case 2:
+				return seleccionSegundaPregunta.some(
+					option => option.checked
+				);
+			case 3:
+				return seleccionTerceraPregunta.some(
+					option => option.checked
+				);
+			default:
+				return false;
+		}
+	};
+
 	const handleNext = () => {
-		if (actualForm < 3) setActualForm(actualForm + 1);
+		if (isFormComplete(actualForm)) {
+			if (actualForm < 3) setActualForm(actualForm + 1);
+		} else {
+			alert('Debe seleccionar al menos uno');
+		}
 	};
 
 	const handleBack = () => {
@@ -34,8 +59,21 @@ const FormularioInicial = () => {
 	};
 
 	const finishForm = async () => {
+		if (!isFormComplete(actualForm)) {
+			alert('Debe seleccionar al menos uno');
+			return;
+		}
 		dispatch(setFirstLogin());
+		dispatch(
+			guardarRespuestasThunk(
+				seleccionPrimerPregunta,
+				seleccionSegundaPregunta,
+				seleccionTerceraPregunta
+			)
+		);
 	};
+
+	if (isLoading) return <Splash />;
 
 	const RenderForm = () => {
 		switch (actualForm) {

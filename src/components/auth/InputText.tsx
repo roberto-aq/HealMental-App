@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
 		gap: 12,
 	},
 	text: {
-		fontWeight: 'bold',
+		fontFamily: 'Quicksand700',
 		textTransform: 'capitalize',
 	},
 
@@ -39,5 +39,6 @@ const styles = StyleSheet.create({
 		height: 45,
 		color: '#333',
 		paddingHorizontal: 12,
+		fontFamily: 'Quicksand500',
 	},
 });
