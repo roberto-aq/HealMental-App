@@ -1,20 +1,27 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import {
 	StyleSheet,
 	Text,
 	View,
 	ScrollView,
 	Image,
+	Pressable,
+	TouchableHighlight,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
-import { getEmocionByFechaThunk } from '../../store/slices/calendario/thunks';
+import {
+	deleteRegistroEmocionThunk,
+	getEmocionByFechaThunk,
+} from '../../store/slices/calendario/thunks';
 import { globalStyles } from '../../styles/global';
 import Splash from '../Splash';
 import { Octicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Colors } from '../../constants/colors';
 import { emocionesImages } from '../../helpers/helpers';
+import ModalFormUpdateRegistro from '../../components/calendario/ModalFormUpdateRegistro';
+import { useNavigation } from '@react-navigation/native';
 
 const DetalleRegistroScreen = ({ route }) => {
 	const { fecha } = route.params;
@@ -23,7 +30,15 @@ const DetalleRegistroScreen = ({ route }) => {
 		(state: RootState) => state.calendario
 	);
 
+	const [modalEditVisible, setModalEditVisible] = useState(false);
+
 	const dispatch = useDispatch();
+	const navigation = useNavigation();
+
+	const eliminarEmocion = () => {
+		dispatch(deleteRegistroEmocionThunk(emocion.id));
+		navigation.goBack();
+	};
 
 	useEffect(() => {
 		dispatch(getEmocionByFechaThunk(fecha));
@@ -84,17 +99,48 @@ const DetalleRegistroScreen = ({ route }) => {
 				</View>
 				<View style={styles.containerEtiquetas}>
 					<Text style={styles.titleEtiquetas}>Etiquetas</Text>
-					<View style={styles.containerEtiquetasBadge}>
-						{emocion.etiquetas.map(etiqueta => (
-							<View style={styles.etiquetaBadge} key={etiqueta.id}>
-								<Text style={styles.textEtiquetaBadge}>
-									{etiqueta.nombre}
-								</Text>
-							</View>
-						))}
-					</View>
+					{emocion.etiquetas.length === 0 ? (
+						<View style={{ alignSelf: 'flex-start' }}>
+							<Text style={styles.textSinEtiqueta}>
+								No tiene etiquetas
+							</Text>
+						</View>
+					) : (
+						<View style={styles.containerEtiquetasBadge}>
+							{emocion.etiquetas.map(etiqueta => (
+								<View style={styles.etiquetaBadge} key={etiqueta.id}>
+									<Text style={styles.textEtiquetaBadge}>
+										{etiqueta.nombre}
+									</Text>
+								</View>
+							))}
+						</View>
+					)}
+				</View>
+
+				<View style={styles.containerButtons}>
+					<TouchableHighlight
+						style={styles.button}
+						onPress={() => setModalEditVisible(true)}
+						underlayColor={Colors.primary}
+					>
+						<Text style={styles.buttonText}>Editar</Text>
+					</TouchableHighlight>
+					<TouchableHighlight
+						style={styles.button}
+						onPress={eliminarEmocion}
+						underlayColor={Colors.primary}
+					>
+						<Text style={styles.buttonText}>Eliminar</Text>
+					</TouchableHighlight>
 				</View>
 			</ScrollView>
+
+			<ModalFormUpdateRegistro
+				modalEditVisible={modalEditVisible}
+				setModalEditVisible={setModalEditVisible}
+				emocion={emocion}
+			/>
 		</View>
 	);
 };
@@ -167,10 +213,16 @@ const styles = StyleSheet.create({
 		borderColor: Colors.secondary,
 		flex: 1,
 		width: '100%',
+		borderRadius: 12,
+		height: 100,
+		backgroundColor: Colors.primary,
+		paddingHorizontal: 10,
+		paddingVertical: 5,
 	},
 	contentNotaDelDia: {
 		fontFamily: 'Quicksand500',
 		fontSize: 16,
+		color: Colors.light,
 	},
 	containerDesencadenante: {
 		gap: 15,
@@ -194,12 +246,12 @@ const styles = StyleSheet.create({
 	},
 	contentDesencadenante: {
 		fontFamily: 'Quicksand500',
-		fontSize: 14,
+		fontSize: 16,
 		color: Colors.light,
 	},
 	containerEtiquetas: {
 		alignItems: 'center',
-		gap: 15,
+		gap: 5,
 	},
 	titleEtiquetas: {
 		fontFamily: 'Quicksand700',
@@ -222,9 +274,31 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center',
 	},
+	textSinEtiqueta: {
+		color: Colors.secondary,
+		fontSize: 16,
+		fontFamily: 'Quicksand700',
+	},
 	textEtiquetaBadge: {
 		color: Colors.light,
 		fontFamily: 'Quicksand500',
 		textTransform: 'capitalize',
+	},
+	containerButtons: {
+		flexDirection: 'row',
+		gap: 30,
+		marginVertical: 25,
+		marginTop: 35,
+	},
+	button: {
+		padding: 7,
+		borderWidth: 2,
+		borderColor: Colors.primary,
+		borderRadius: 12,
+		flex: 1,
+		alignItems: 'center',
+	},
+	buttonText: {
+		fontFamily: 'Quicksand700',
 	},
 });

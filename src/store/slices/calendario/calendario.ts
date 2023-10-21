@@ -46,6 +46,25 @@ export const calendarioSlice = createSlice({
 			state.emocion = payload;
 			state.isLoading = false;
 		},
+		updateEmocionById: (state, { payload }) => {
+			const index = state.emociones.findIndex(
+				emocion => emocion.id === payload.id
+			);
+
+			if (index !== -1) {
+				state.emociones[index] = payload;
+			}
+
+			state.emocion = payload;
+
+			state.isLoading = false;
+		},
+		eliminarEmocionById: (state, { payload }) => {
+			state.emociones = state.emociones.filter(
+				emocion => emocion.id !== payload
+			);
+			state.isLoading = false;
+		},
 	},
 });
 
@@ -56,4 +75,6 @@ export const {
 	registrarEmocion,
 	setIsEmocionRegistrada,
 	getEmocionByFecha,
+	updateEmocionById,
+	eliminarEmocionById,
 } = calendarioSlice.actions;

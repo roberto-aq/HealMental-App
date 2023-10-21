@@ -14,6 +14,7 @@ import {
 import { RootState } from '../store/store';
 import SessionExpiredModal from '../components/SessionExpiredModal';
 import FormularioInicial from '../screens/FormularioInicial';
+import { getUsuarioAutenticadoThunk } from '../store/slices/auth/thunks';
 
 export default function RootNavigator() {
 	const {
@@ -58,9 +59,14 @@ export default function RootNavigator() {
 		dispatch(tokenExpired());
 	};
 
+	const getUserAutenticado = () => {
+		dispatch(getUsuarioAutenticadoThunk());
+	};
+
 	useEffect(() => {
 		getToken();
 		getNombreUsuario();
+		getUserAutenticado();
 	}, []);
 
 	if (isLoading) {

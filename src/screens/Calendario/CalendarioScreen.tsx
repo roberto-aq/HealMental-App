@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet } from 'react-native';
 import RegistroEmocional from './RegistroEmocional';
 import CalendarioComponent from '../../components/calendario/CalendarioComponent';
 import CalendarioLayout from '../../components/calendario/CalendarioLayout';
@@ -10,12 +10,22 @@ const CalendarioScreen = ({ navigation }) => {
 		'calendario' | 'registroEmocional' | 'estadisticas'
 	>('calendario');
 
+	const regresarCalendario = () => {
+		setCurrentView('calendario');
+	};
+
 	const renderCurrentView = () => {
 		switch (currentView) {
 			case 'registroEmocional':
-				return <RegistroEmocional />;
+				return (
+					<RegistroEmocional
+						regresarCalendario={regresarCalendario}
+					/>
+				);
 			case 'estadisticas':
 				return <EstadisticasScreen />;
+			case 'calendario':
+				return <CalendarioComponent />;
 			default:
 				return <CalendarioComponent />;
 		}

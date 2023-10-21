@@ -35,7 +35,6 @@ const ModalUpdateNota: React.FC<propsModal> = ({
 	const handleUpdateNota = (title: string, description: string) => {
 		dispatch(updateNotaThunk(id, title, description));
 		setIsModalVisible(false);
-		console.log(title, description);
 	};
 
 	return (

@@ -31,7 +31,8 @@ const NotaIndividualScreen = ({ route, navigation }) => {
 
 	const handleDeleteNota = (id: string) => {
 		dispatch(deleteNotaThunk(id));
-		navigation.navigate('Notas');
+		// navigation.navigate('Notas');
+		navigation.goBack();
 	};
 
 	return (

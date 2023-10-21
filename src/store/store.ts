@@ -6,6 +6,7 @@ import { formularioInicialSlice } from './slices/formularioInicial/formularioIni
 import { perfilSlice } from './slices/Perfil/perfil';
 import { ejerciciosSlice } from './slices/ejercicios/ejercicios';
 import { calendarioSlice } from './slices/calendario/calendario';
+import { chatSlice } from './slices/chat/chat';
 
 export const store = configureStore({
 	reducer: {
@@ -15,6 +16,7 @@ export const store = configureStore({
 		perfil: perfilSlice.reducer,
 		ejercicios: ejerciciosSlice.reducer,
 		calendario: calendarioSlice.reducer,
+		chat: chatSlice.reducer,
 	},
 	middleware: getDefaultMiddleware =>
 		getDefaultMiddleware().concat(thunkMiddleware),
