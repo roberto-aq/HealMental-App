@@ -1,4 +1,7 @@
-import { createStackNavigator } from '@react-navigation/stack';
+import {
+	CardStyleInterpolators,
+	createStackNavigator,
+} from '@react-navigation/stack';
 import EjerciciosScreen from '../screens/EjerciciosScreen';
 import EjercicioDetalleScreen from '../screens/EjercicioDetalleScreen';
 import HeaderTab from '../components/HeaderTab';
@@ -27,7 +30,9 @@ export default function EjerciciosStack() {
 			<Stack.Screen
 				name='DetalleEjercicio'
 				component={EjercicioDetalleScreen}
-				options={{ title: ' ' }}
+				options={{
+					title: ' ',
+				}}
 			/>
 		</Stack.Navigator>
 	);

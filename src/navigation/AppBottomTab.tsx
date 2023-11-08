@@ -10,10 +10,28 @@ import { Colors } from '../constants/colors';
 import { StyleSheet } from 'react-native';
 import HeaderTab from '../components/HeaderTab';
 import CalendarioStack from './CalendarioStack';
+import Animated, {
+	useAnimatedStyle,
+	withTiming,
+} from 'react-native-reanimated';
 
 const AppTab = createBottomTabNavigator();
 
 export default function AppBottomTab() {
+	// const AnimatedTabIcon = ({ focused, name }) => {
+	// 	const animatedStyles = useAnimatedStyle(() => {
+	// 		return {
+	// 			opacity: withTiming(focused ? 1 : 0.5),
+	// 		};
+	// 	});
+
+	// 	return (
+	// 		<Animated.View style={animatedStyles}>
+	// 			<Ionicons name={name} size={24} />
+	// 		</Animated.View>
+	// 	);
+	// };
+
 	return (
 		<AppTab.Navigator
 			initialRouteName='Home'
@@ -32,7 +50,7 @@ export default function AppBottomTab() {
 				tabBarActiveTintColor: Colors.tertiary,
 				tabBarLabelStyle: {
 					fontSize: 10,
-					fontFamily: 'Quicksand500',
+					fontFamily: 'Quicksand700',
 					bottom: 11,
 					letterSpacing: 0.5,
 				},
@@ -42,7 +60,7 @@ export default function AppBottomTab() {
 				name='Home'
 				component={HomeScreen}
 				options={{
-					tabBarIcon: ({ color }) => (
+					tabBarIcon: ({ color, focused }) => (
 						<Ionicons name='home' color={color} size={24} />
 					),
 					tabBarLabel: 'Inicio',

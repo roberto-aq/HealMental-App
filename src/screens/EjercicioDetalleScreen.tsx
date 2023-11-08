@@ -153,6 +153,9 @@ const EjercicioDetalleScreen: React.FC<
 						play={playing}
 						videoId={ejercicioById.media}
 						onChangeState={onStateChange}
+						webViewProps={{
+							renderToHardwareTextureAndroid: true,
+						}}
 					/>
 				</View>
 			) : (
@@ -334,10 +337,10 @@ const styles = StyleSheet.create({
 		marginBottom: 20,
 	},
 	iconButton: {
-		color: Colors.light,
+		color: Colors.secondary,
 	},
 	textButton: {
-		color: Colors.light,
+		color: Colors.secondary,
 		fontSize: 14,
 		fontFamily: 'Quicksand700',
 	},

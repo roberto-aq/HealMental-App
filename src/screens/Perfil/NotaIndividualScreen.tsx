@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
 	},
 	contentNota: {
 		flex: 1,
-		backgroundColor: Colors.light,
+		backgroundColor: Colors.primary,
 		borderRadius: 12,
 		paddingHorizontal: 20,
 		paddingTop: 25,
@@ -138,8 +138,8 @@ const styles = StyleSheet.create({
 		borderRadius: 12,
 		flexDirection: 'row',
 		gap: 15,
-		elevation: 5,
-		shadowColor: '#00000050',
+		elevation: 55,
+		shadowColor: '#00000070',
 		shadowOffset: {
 			width: 10,
 			height: 10,
@@ -156,6 +156,6 @@ const styles = StyleSheet.create({
 		backgroundColor: Colors.delete,
 	},
 	editButton: {
-		backgroundColor: Colors.primary,
+		backgroundColor: Colors.secondary,
 	},
 });

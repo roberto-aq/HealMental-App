@@ -33,7 +33,11 @@ const NotaCard: React.FC<propsNotaCard> = ({ nota }) => {
 	return (
 		<Pressable
 			onPress={() =>
-				navigation.navigate('NotaIndividual', { id: nota.id })
+				navigation.navigate('Perfil', {
+					screen: 'NotaIndividual',
+					params: { id: nota.id },
+					initial: false,
+				})
 			}
 		>
 			<View style={[styles.card, { backgroundColor: colorFondo }]}>

@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 	},
 	textButtonNew: {
-		color: Colors.light,
+		color: Colors.secondary,
 		fontSize: 14,
 		fontWeight: 'bold',
 	},

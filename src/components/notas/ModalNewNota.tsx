@@ -96,18 +96,18 @@ const styles = StyleSheet.create({
 		top: 20,
 		right: 25,
 		padding: 10,
-		shadowColor: '#000',
+		shadowColor: '#00000060',
 		shadowOffset: {
-			width: 0,
-			height: 0,
+			width: 10,
+			height: 10,
 		},
 		shadowRadius: 5,
 		shadowOpacity: 0.35,
-		elevation: 3,
+		elevation: 15,
 		backgroundColor: '#fff',
 		borderRadius: 500,
 	},
 	iconButtonClose: {
-		color: Colors.primary,
+		color: Colors.secondary,
 	},
 });

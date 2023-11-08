@@ -101,11 +101,11 @@ const styles = StyleSheet.create({
 		gap: 15,
 	},
 	textButton: {
-		color: Colors.light,
+		color: Colors.secondary,
 		fontSize: 14,
 		fontWeight: '700',
 	},
 	iconButton: {
-		color: '#fff',
+		color: Colors.secondary,
 	},
 });

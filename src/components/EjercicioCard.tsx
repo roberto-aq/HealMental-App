@@ -5,11 +5,16 @@ import {
 	View,
 	Dimensions,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import {
+	NavigationContext,
+	useIsFocused,
+	useNavigation,
+} from '@react-navigation/native';
 import { Ejercicio } from '../interfaces/ejercicioApi';
 import { getColorByCategory, shortenText } from '../helpers/helpers';
 import ButtonFavorite from './Perfil/ButtonFavorite';
 import { Colors } from '../constants/colors';
+import React, { useContext } from 'react';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -17,6 +22,19 @@ const EjercicioCard: React.FC<{
 	item: Ejercicio;
 }> = ({ item }) => {
 	const navigation = useNavigation();
+	const isFocused = useIsFocused();
+	// const navigationContext = useContext(NavigationContext);
+
+	// Asegúrate de que el contexto no sea nulo y luego accede a `isReady`
+	// const navigationReady = (useContext(NavigationContext) as NavigationContextType)?.isReady();
+
+	const handlePress = () => {
+		navigation.navigate('Ejercicios', {
+			screen: 'DetalleEjercicio',
+			params: { id: item.id },
+			initial: false,
+		});
+	};
 
 	return (
 		<View
@@ -29,14 +47,7 @@ const EjercicioCard: React.FC<{
 				},
 			]}
 		>
-			<Pressable
-				style={styles.card}
-				onPress={() =>
-					navigation.navigate('DetalleEjercicio', {
-						id: item.id,
-					})
-				}
-			>
+			<Pressable style={styles.card} onPress={handlePress}>
 				<View style={[styles.cardLine]}></View>
 				<View style={[styles.cardContent]}>
 					<Text style={styles.cardTextTitle}>{item.nombre}</Text>

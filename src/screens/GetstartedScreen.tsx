@@ -13,7 +13,7 @@ import { globalStyles } from '../styles/global';
 
 const GetstartedScreen = ({ navigation }) => {
 	return (
-		<View style={[globalStyles.screenContainer, styles.container]}>
+		<View style={[styles.container]}>
 			<View style={styles.containerLogo}>
 				<Image
 					source={require('../../assets/icon_healmental.png')}
@@ -28,7 +28,10 @@ const GetstartedScreen = ({ navigation }) => {
 			<Text style={styles.headerTitle}>
 				Descubre una nueva forma de Cuidar tu Mente
 			</Text>
-			<Image source={require('../../assets/gif-started.gif')} />
+			<Image
+				source={require('../../assets/gif-started.gif')}
+				style={{ width: '100%', flex: 1 }}
+			/>
 			<View style={styles.containerButtons}>
 				<TouchableOpacity
 					style={[styles.button, styles.buttonLogin]}
@@ -58,6 +61,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'space-between',
 		paddingTop: StatusBar.currentHeight,
+		paddingVertical: 30,
 	},
 	containerLogo: {
 		alignItems: 'center',
@@ -79,15 +83,14 @@ const styles = StyleSheet.create({
 
 	headerTitle: {
 		color: Colors.secondary,
-		fontSize: 26,
+		fontSize: 25,
 		fontFamily: 'Quicksand700',
-		width: '90%',
+		width: '85%',
 		textAlign: 'center',
 		lineHeight: 35,
-		paddingTop: 30,
+		paddingVertical: 40,
 	},
 	containerButtons: {
-		marginBottom: 20,
 		width: '85%',
 		gap: 12,
 	},
