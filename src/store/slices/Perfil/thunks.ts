@@ -5,9 +5,11 @@ import {
 	addEjercicioFavorito,
 	finishLoading,
 	getEjerciciosFavoritos,
+	getProfesionales,
 	removeEjercicioFavorito,
 	startLoading,
 } from './perfil';
+import { Dispatch } from '@reduxjs/toolkit';
 
 export const getEjerciciosFavoritosThunk = () => {
 	return async dispatch => {
@@ -67,6 +69,24 @@ export const deleteEjercicioFavoritoThunk = (ejercicioId: string) => {
 			);
 			dispatch(removeEjercicioFavorito(ejercicioId));
 		} catch (error) {
+			console.log(error.response.data);
+			dispatch(finishLoading());
+		}
+	};
+};
+
+/* ********************************** */
+/*            PROFESIONALES           */
+/* ********************************** */
+export const getProfesionalesThunk = () => {
+	return async (dispatch: Dispatch) => {
+		dispatch(startLoading());
+
+		try {
+			const { data } = await api.get(`${API_URL}/profesionales`);
+
+			dispatch(getProfesionales(data));
+		} catch (error: any) {
 			console.log(error.response.data);
 			dispatch(finishLoading());
 		}

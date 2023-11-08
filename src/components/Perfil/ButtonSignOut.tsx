@@ -1,5 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
+import { Colors } from '../../constants/colors';
 
 const ButtonSignOut = ({ onPress }) => {
 	return (
@@ -18,18 +19,21 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 30,
 		height: 45,
 		borderRadius: 12,
-		borderWidth: 1,
-		borderColor: 'red',
+		// borderWidth: 1,
+		// borderColor: '#e1e1e1',
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		alignItems: 'center',
+		backgroundColor: Colors.delete,
+		elevation: 10,
+		shadowColor: '#00000050',
 	},
 	textButton: {
-		color: '#808080',
+		color: Colors.light,
 		fontSize: 14,
-		fontWeight: '500',
+		fontFamily: 'Quicksand700',
 	},
 	iconButton: {
-		color: 'red',
+		color: Colors.light,
 	},
 });

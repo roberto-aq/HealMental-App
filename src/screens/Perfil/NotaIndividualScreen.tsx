@@ -88,15 +88,21 @@ const styles = StyleSheet.create({
 	},
 	contentNota: {
 		flex: 1,
-		backgroundColor: Colors.primary,
+		backgroundColor: Colors.light,
 		borderRadius: 12,
 		paddingHorizontal: 20,
 		paddingTop: 25,
+		elevation: 15,
+		shadowColor: '#00000050',
+		shadowOffset: {
+			width: 10,
+			height: 10,
+		},
 		// gap: 50,
 	},
 	textTitleNota: {
 		fontSize: 16,
-		fontWeight: '700',
+		fontFamily: 'Quicksand700',
 		color: Colors.secondary,
 		textAlign: 'center',
 		marginBottom: 20,
@@ -112,18 +118,18 @@ const styles = StyleSheet.create({
 	},
 	textDate: {
 		color: Colors.secondary,
-		fontWeight: '500',
+		fontFamily: 'Quicksand500',
 	},
 	textDescription: {
 		fontSize: 14,
-		fontWeight: '400',
+		fontFamily: 'Quicksand500',
 		lineHeight: 23,
 		color: Colors.secondary,
 		marginBottom: 40,
 	},
 	containerButtons: {
 		gap: 15,
-		marginBottom: 10,
+		marginBottom: 20,
 	},
 	button: {
 		height: 45,
@@ -132,6 +138,12 @@ const styles = StyleSheet.create({
 		borderRadius: 12,
 		flexDirection: 'row',
 		gap: 15,
+		elevation: 5,
+		shadowColor: '#00000050',
+		shadowOffset: {
+			width: 10,
+			height: 10,
+		},
 	},
 	textButton: {
 		color: Colors.light,

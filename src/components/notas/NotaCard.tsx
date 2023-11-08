@@ -1,16 +1,34 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useState } from 'react';
+import {
+	Pressable,
+	StyleSheet,
+	Text,
+	View,
+	Dimensions,
+} from 'react-native';
 import { Nota } from '../../interfaces/notasApi';
 import { Colors } from '../../constants/colors';
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { formatDate, shortenText } from '../../helpers/helpers';
+import {
+	coloresAleatorios,
+	formatDate,
+	obtenerColorAleatorio,
+	shortenText,
+} from '../../helpers/helpers';
 
 interface propsNotaCard {
 	nota: Nota;
 }
 
+const screenWidth = Dimensions.get('window').width;
+
 const NotaCard: React.FC<propsNotaCard> = ({ nota }) => {
 	const navigation = useNavigation();
+
+	const [colorFondo, setColorFondo] = useState(() =>
+		obtenerColorAleatorio(coloresAleatorios)
+	);
 
 	return (
 		<Pressable
@@ -18,13 +36,17 @@ const NotaCard: React.FC<propsNotaCard> = ({ nota }) => {
 				navigation.navigate('NotaIndividual', { id: nota.id })
 			}
 		>
-			<View style={styles.card}>
+			<View style={[styles.card, { backgroundColor: colorFondo }]}>
 				<View style={styles.cardLine}></View>
 				<View style={styles.cardContent}>
-					<Text style={styles.cardTextTitle}>{nota.tituloNota}</Text>
-					<Text style={styles.cardTextContent}>
-						{shortenText(nota.descripcionNota)}
-					</Text>
+					<View style={{ gap: 10, flex: 1 }}>
+						<Text style={styles.cardTextTitle}>
+							{nota.tituloNota}
+						</Text>
+						<Text style={styles.cardTextContent}>
+							{shortenText(nota.descripcionNota)}
+						</Text>
+					</View>
 					<View style={styles.containerDate}>
 						<AntDesign
 							name='clockcircle'
@@ -50,6 +72,8 @@ const styles = StyleSheet.create({
 		borderRadius: 15,
 		overflow: 'hidden',
 		marginVertical: 10,
+		width: screenWidth - 50,
+		height: 130,
 	},
 	cardLine: {
 		width: 23,
@@ -59,14 +83,13 @@ const styles = StyleSheet.create({
 		flex: 1,
 		paddingHorizontal: 20,
 		paddingVertical: 13,
-		gap: 15,
 	},
 	cardTextTitle: {
 		color: Colors.secondary,
-		fontWeight: 'bold',
+		fontFamily: 'Quicksand700',
 	},
 	cardTextContent: {
-		fontWeight: '300',
+		fontFamily: 'Quicksand400',
 		color: Colors.secondary,
 		lineHeight: 20,
 	},
@@ -80,5 +103,6 @@ const styles = StyleSheet.create({
 	},
 	textDate: {
 		color: Colors.secondary,
+		fontFamily: 'Quicksand400',
 	},
 });

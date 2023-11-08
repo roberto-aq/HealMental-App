@@ -9,6 +9,8 @@ import { Colors } from '../../constants/colors';
 import { useNavigation } from '@react-navigation/native';
 
 const NotFoundEjerciciosFavoritos = () => {
+	const navigation = useNavigation();
+
 	return (
 		<View style={styles.containerImage}>
 			<Text style={styles.title}>
@@ -21,7 +23,10 @@ const NotFoundEjerciciosFavoritos = () => {
 			<Text style={styles.subtitle}>
 				¿Por qué no explorar algunos ahora?
 			</Text>
-			<Pressable style={styles.button}>
+			<Pressable
+				style={styles.button}
+				onPress={() => navigation.navigate('Ejercicios')}
+			>
 				<Text style={styles.textButton}>Ir a Ejercicios</Text>
 			</Pressable>
 		</View>
@@ -65,6 +70,6 @@ const styles = StyleSheet.create({
 	},
 	textButton: {
 		fontWeight: '700',
-		color: '#fff',
+		color: Colors.secondary,
 	},
 });

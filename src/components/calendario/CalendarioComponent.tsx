@@ -88,7 +88,7 @@ const CalendarioComponent = () => {
 				selectedDayBackgroundColor: '#333',
 				selectedDayTextColor: 'gray',
 				todayTextColor: '#00adf5',
-				arrowColor: Colors.primary,
+				arrowColor: Colors.secondary,
 				textDayFontWeight: '300',
 				textDayHeaderFontWeight: '300',
 				textDayFontSize: 16,
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
 		color: '#e1e1e1',
 	},
 	textToday: {
-		color: Colors.primary,
+		color: Colors.tertiary,
 	},
 	containerEmoji: {
 		width: 40,
@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
 	},
 	circleToday: {
 		borderWidth: 2,
-		borderColor: Colors.primary,
+		borderColor: Colors.tertiary,
 	},
 	viewEmoji: {
 		width: '100%',

@@ -1,5 +1,10 @@
-import { useContext, useEffect } from 'react';
-import { StyleSheet, Text, View, FlatList } from 'react-native';
+import { useEffect, useState, useCallback } from 'react';
+import {
+	StyleSheet,
+	Text,
+	View,
+	TouchableOpacity,
+} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Colors } from '../constants/colors';
 import Splash from './Splash';
@@ -7,8 +12,27 @@ import { AntDesign } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { getEjercicioByIdThunk } from '../store/slices/ejercicios/thunks';
 import { RootState } from '../store/store';
+import YoutubePlayer from 'react-native-youtube-iframe';
+import {
+	addEjercicioFavoritoThunk,
+	deleteEjercicioFavoritoThunk,
+} from '../store/slices/Perfil/thunks';
 
-const EjercicioDetalleScreen = ({ route }) => {
+interface EjercicioDetalleScreenProps {
+	route: { params: { id: string } };
+}
+
+const EjercicioDetalleScreen: React.FC<
+	EjercicioDetalleScreenProps
+> = ({ route }) => {
+	const [playing, setPlaying] = useState(false);
+
+	const onStateChange = useCallback((state: any) => {
+		if (state === 'ended') {
+			setPlaying(false);
+		}
+	}, []);
+
 	const { id } = route.params;
 
 	const dispatch = useDispatch();
@@ -16,6 +40,21 @@ const EjercicioDetalleScreen = ({ route }) => {
 	const { ejercicioById, isLoading } = useSelector(
 		(state: RootState) => state.ejercicios
 	);
+	const { ejerciciosFavoritos } = useSelector(
+		(state: RootState) => state.perfil
+	);
+
+	const isFavorito = ejerciciosFavoritos.some(
+		ejercicio => ejercicio.id === ejercicioById.id
+	);
+
+	const toggleFavorite = () => {
+		if (isFavorito) {
+			dispatch(deleteEjercicioFavoritoThunk(ejercicioById.id));
+		} else {
+			dispatch(addEjercicioFavoritoThunk(ejercicioById.id));
+		}
+	};
 
 	const getEjercicioById = (id: string) => {
 		dispatch(getEjercicioByIdThunk(id));
@@ -84,9 +123,63 @@ const EjercicioDetalleScreen = ({ route }) => {
 			<View style={styles.containerDuracion}>
 				<Text style={styles.textTitleDuracion}>Duración:</Text>
 				<Text style={styles.textContentDuracion}>
-					{ejercicioById.duracion} minutos
+					{ejercicioById.duracion}
 				</Text>
 			</View>
+
+			<View style={styles.containerDuracion}>
+				<Text style={styles.textTitleDuracion}>
+					Frecuencia Recomendada:
+				</Text>
+				<Text style={styles.textContentDuracion}>
+					{ejercicioById.frecuenciaRecomendada}
+				</Text>
+			</View>
+
+			<View style={[styles.containerDuracion, { marginBottom: 20 }]}>
+				<Text style={styles.textTitleDuracion}>Dificultad:</Text>
+				<Text style={styles.textContentDuracion}>
+					{ejercicioById.dificultad}
+				</Text>
+			</View>
+
+			{ejercicioById.media ? (
+				<View style={styles.containerVideoYoutube}>
+					<Text style={styles.textTitleVideo}>
+						¿Cómo puedo hacer?
+					</Text>
+					<YoutubePlayer
+						height={300}
+						play={playing}
+						videoId={ejercicioById.media}
+						onChangeState={onStateChange}
+					/>
+				</View>
+			) : (
+				''
+			)}
+
+			<TouchableOpacity
+				style={styles.cardButton}
+				onPress={toggleFavorite}
+			>
+				<AntDesign
+					name={isFavorito ? 'heart' : 'hearto'}
+					size={18}
+					style={[
+						styles.iconButton,
+						!isFavorito ? { color: Colors.secondary } : {},
+					]}
+				/>
+				<Text
+					style={[
+						styles.textButton,
+						!isFavorito ? { color: Colors.secondary } : {},
+					]}
+				>
+					{isFavorito ? 'Añadido a Favoritos' : 'Añadir a Favoritos'}
+				</Text>
+			</TouchableOpacity>
 		</ScrollView>
 	);
 };
@@ -107,15 +200,16 @@ const styles = StyleSheet.create({
 	},
 	titleEjercicio: {
 		fontSize: 20,
-		fontWeight: 'bold',
+		fontFamily: 'Quicksand700',
 		color: Colors.light,
 		textAlign: 'center',
 		width: '80%',
 		lineHeight: 25,
+		textTransform: 'capitalize',
 	},
 	textContent: {
 		fontSize: 16,
-		fontWeight: '300',
+		fontFamily: 'Quicksand400',
 		color: Colors.secondary,
 		marginTop: 40,
 		marginBottom: 15,
@@ -125,9 +219,10 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		gap: 5,
 		alignItems: 'center',
+		marginTop: 20,
 	},
 	textTitleCategory: {
-		fontWeight: 'bold',
+		fontFamily: 'Quicksand700',
 		color: Colors.secondary,
 	},
 	textContentCategory: {
@@ -137,6 +232,7 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 15,
 		paddingVertical: 3,
 		fontSize: 12,
+		fontFamily: 'Quicksand700',
 	},
 	containerBeneficios: {
 		alignItems: 'center',
@@ -154,13 +250,13 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 	},
 	textTitleBeneficios: {
-		fontWeight: 'bold',
+		fontFamily: 'Quicksand700',
 		fontSize: 18,
 		color: Colors.secondary,
 	},
 	textContentBeneficios: {
 		fontSize: 16,
-		fontWeight: '300',
+		fontFamily: 'Quicksand400',
 		color: Colors.secondary,
 		width: '87%',
 		lineHeight: 25,
@@ -187,14 +283,14 @@ const styles = StyleSheet.create({
 	},
 
 	textTitleInstrucciones: {
-		fontWeight: 'bold',
+		fontFamily: 'Quicksand700',
 		fontSize: 18,
 		color: Colors.secondary,
 	},
 	textContentInstrucciones: {
 		lineHeight: 25,
 		color: Colors.secondary,
-		fontWeight: '300',
+		fontFamily: 'Quicksand400',
 		width: '95%',
 		fontSize: 16,
 	},
@@ -202,19 +298,47 @@ const styles = StyleSheet.create({
 	containerDuracion: {
 		gap: 10,
 		marginTop: 30,
-		flexDirection: 'row',
-		backgroundColor: Colors.primary,
 		alignSelf: 'flex-start',
-		alignItems: 'center',
-		paddingHorizontal: 15,
-		paddingVertical: 5,
-		borderRadius: 5,
+		alignItems: 'flex-start',
 	},
 	textTitleDuracion: {
-		fontWeight: '700',
+		fontFamily: 'Quicksand700',
 		color: Colors.secondary,
+		fontSize: 18,
 	},
 	textContentDuracion: {
+		color: Colors.secondary,
+		fontFamily: 'Quicksand400',
+		lineHeight: 25,
+		fontSize: 16,
+	},
+	containerVideoYoutube: {
+		gap: 20,
+		marginVertical: 20,
+	},
+	textTitleVideo: {
+		fontFamily: 'Quicksand700',
+		color: Colors.secondary,
+		fontSize: 18,
+		textAlign: 'center',
+	},
+
+	// BUTTON FAVORITE
+	cardButton: {
+		backgroundColor: Colors.primary,
+		flexDirection: 'row',
+		gap: 10,
+		paddingVertical: 15,
+		justifyContent: 'center',
+		borderRadius: 12,
+		marginBottom: 20,
+	},
+	iconButton: {
 		color: Colors.light,
+	},
+	textButton: {
+		color: Colors.light,
+		fontSize: 14,
+		fontFamily: 'Quicksand700',
 	},
 });

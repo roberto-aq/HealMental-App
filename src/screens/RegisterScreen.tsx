@@ -49,7 +49,7 @@ const RegisterScreen = ({ navigation }) => {
 			setIsModalVisible(true);
 			return;
 		}
-
+		/* 
 		const erroresServidor = await dispatch(
 			registerThunk({
 				nombreUsuario: nameUser,
@@ -66,7 +66,10 @@ const RegisterScreen = ({ navigation }) => {
 			// setIsModalVisible(true);
 			alert(erroresServidor);
 			return;
-		}
+		} */
+		navigation.navigate('ContactoEmergencia', {
+			user: { nombreUsuario: nameUser, email, password },
+		});
 	};
 
 	return (
@@ -100,7 +103,7 @@ const RegisterScreen = ({ navigation }) => {
 					labelButton='Registrarse'
 					onPress={register}
 					backgroundColor={Colors.primary}
-					textColor='#fff'
+					textColor={Colors.secondary}
 				/>
 				<View style={styles.containerSeparator}>
 					<View style={styles.separator}></View>
@@ -112,8 +115,8 @@ const RegisterScreen = ({ navigation }) => {
 				<ButtonForm
 					labelButton='Continuar con Google'
 					onPress={() => navigation.navigate('AppHome')}
-					backgroundColor='#E0FBFC'
-					textColor='#000'
+					backgroundColor={Colors.primary}
+					textColor={Colors.secondary}
 				/>
 			</View>
 
@@ -181,14 +184,15 @@ const styles = StyleSheet.create({
 		gap: 5,
 	},
 	finalText: {
-		fontSize: 13,
+		fontSize: 14,
 		justifyContent: 'center',
 		alignItems: 'center',
 		fontFamily: 'Quicksand500',
 	},
 	finalTextLink: {
-		color: Colors.primary,
+		color: Colors.secondary,
 		fontFamily: 'Quicksand700',
-		fontSize: 13,
+		fontSize: 14,
+		textDecorationLine: "underline"
 	},
 });

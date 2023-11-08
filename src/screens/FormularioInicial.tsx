@@ -11,11 +11,15 @@ import { RootState } from '../store/store';
 import { setFirstLogin } from '../store/slices/auth/auth';
 import { guardarRespuestasThunk } from '../store/slices/formularioInicial/thunks';
 import Splash from './Splash';
+import { registerThunk } from '../store/slices/auth/thunks';
 
-const FormularioInicial = () => {
+const FormularioInicial = ({ route }) => {
 	const { firstLogin, status } = useSelector(
 		(state: RootState) => state.auth
 	);
+
+	const { user } = route.params;
+	console.log(user);
 
 	const {
 		isLoading,
@@ -64,6 +68,23 @@ const FormularioInicial = () => {
 			return;
 		}
 		dispatch(setFirstLogin());
+		const erroresServidor = await dispatch(
+			registerThunk({
+				nombreUsuario: user.nombreUsuario,
+				email: user.email,
+				password: user.password,
+				contactoEmergencia: user.contactoEmergencia,
+			})
+		);
+
+		if (erroresServidor) {
+			// setErrorMessage(
+			// 	'Credenciales incorrectas. Por favor, inténtelo de nuevo'
+			// );
+			// setIsModalVisible(true);
+			alert(erroresServidor);
+			return;
+		}
 		dispatch(
 			guardarRespuestasThunk(
 				seleccionPrimerPregunta,

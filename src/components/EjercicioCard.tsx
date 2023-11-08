@@ -32,7 +32,9 @@ const EjercicioCard: React.FC<{
 			<Pressable
 				style={styles.card}
 				onPress={() =>
-					navigation.navigate('DetalleEjercicio', { id: item.id })
+					navigation.navigate('DetalleEjercicio', {
+						id: item.id,
+					})
 				}
 			>
 				<View style={[styles.cardLine]}></View>
@@ -64,7 +66,6 @@ const styles = StyleSheet.create({
 		width: screenWidth - 50,
 	},
 	card: {
-		// backgroundColor: Colors.primary,
 		flexDirection: 'row',
 	},
 	cardLine: {
@@ -72,7 +73,6 @@ const styles = StyleSheet.create({
 		backgroundColor: Colors.secondary,
 		opacity: 0.9,
 		height: '100%',
-		// position: "absolute"
 	},
 	pseudoAfter: {
 		width: 24,
@@ -90,12 +90,12 @@ const styles = StyleSheet.create({
 	},
 	cardTextTitle: {
 		color: Colors.secondary,
-		fontWeight: 'bold',
+		fontFamily: 'Quicksand700',
 	},
 	cardTextContent: {
-		fontWeight: '300',
 		color: Colors.secondary,
 		lineHeight: 20,
+		fontFamily: 'Quicksand400',
 	},
 	overlay: {
 		position: 'absolute',

@@ -9,18 +9,33 @@ import {
 	FlatList,
 } from 'react-native';
 import { Colors } from '../constants/colors';
-import { FontAwesome } from '@expo/vector-icons';
-import { useState, useRef } from 'react';
+import { FontAwesome, Entypo } from '@expo/vector-icons';
+import { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import MessageComponent from '../components/chat/MessageComponent';
-import { addMessage } from '../store/slices/chat/chat';
+import { addUserMessage } from '../store/slices/chat/chat';
+import {
+	getConversacionThunk,
+	postMessage,
+	saveMessagesThunk,
+} from '../store/slices/chat/thunks';
+import LoadingChat from '../components/chat/LoadingChat';
+import Splash from './Splash';
+import DraggableButton from '../components/chat/DraggableButton';
+import { contieneCaracteresEspeciales } from '../helpers/helpers';
+import ModalSaveConversation from '../components/chat/ModalSaveConversation';
 
 const ChatScreen = () => {
 	const [mensajeUsuario, setMensajeUsuario] = useState('');
-	const [counter, setCounter] = useState(6);
+	const [modalVisible, setModalVisible] = useState(false);
 
-	const { messages } = useSelector((state: RootState) => state.chat);
+	const {
+		messages,
+		isLoadingMessage,
+		isLoadingConversation,
+		lastSavedTimeStamp,
+	} = useSelector((state: RootState) => state.chat);
 
 	const dispatch = useDispatch();
 
@@ -31,28 +46,93 @@ const ChatScreen = () => {
 	};
 
 	const enviarMensaje = () => {
-		if (mensajeUsuario.trim() === '') {
+		if (mensajeUsuario.trim() === '' || isLoadingMessage) {
 			return;
 		}
 
+		// if (contieneCaracteresEspeciales(mensajeUsuario)) {
+		// 	alert('El mensaje contiene caracteres no permitidos.');
+		// 	return;
+		// }
+
 		dispatch(
-			addMessage({
-				id: counter,
+			addUserMessage({
 				text: mensajeUsuario,
-				isUser: true,
+				role: 'user',
+				timestamp: new Date().toISOString(),
+				messageType: 'text',
 			})
 		);
 
-		setCounter(counter + 1);
 		setMensajeUsuario('');
+
+		dispatch(postMessage(mensajeUsuario));
 	};
+
+	const guardarMensajes = () => {
+		const nuevosMensajes = messages.filter(
+			message => message.timestamp > lastSavedTimeStamp
+		);
+
+		const mensajes = nuevosMensajes.map(message => ({
+			text: message.text,
+			role: message.role,
+			messageType: message.messageType,
+			timestamp: message.timestamp,
+		}));
+
+		if (mensajes.length > 0) {
+			dispatch(saveMessagesThunk(mensajes));
+		}
+
+		console.log('1');
+	};
+
+	useEffect(() => {
+		dispatch(getConversacionThunk());
+	}, []);
+
+	if (isLoadingConversation) return <Splash />;
 
 	return (
 		<View style={[styles.container]}>
+			<DraggableButton>
+				<TouchableOpacity
+					// style={styles.buttonSaveConversation}
+					onPress={() => setModalVisible(true)}
+					style={{
+						alignItems: 'center',
+						justifyContent: 'center',
+						height: '100%',
+					}}
+				>
+					<Text style={styles.textSaveConversation}>
+						<Entypo
+							name='save'
+							size={30}
+							style={{ color: Colors.light }}
+						/>
+					</Text>
+				</TouchableOpacity>
+			</DraggableButton>
 			<FlatList
-				data={messages}
-				keyExtractor={message => message.id.toString()}
-				renderItem={({ item }) => <MessageComponent item={item} />}
+				data={
+					isLoadingMessage
+						? [...messages, { loading: true }]
+						: messages
+				}
+				keyExtractor={message =>
+					message.loading
+						? 'loading'
+						: message.id || message.timestamp
+				}
+				renderItem={({ item }) =>
+					item.loading ? (
+						<LoadingChat />
+					) : (
+						<MessageComponent item={item} />
+					)
+				}
 				ItemSeparatorComponent={() => (
 					<View style={{ marginVertical: 10 }}></View>
 				)}
@@ -79,6 +159,12 @@ const ChatScreen = () => {
 					/>
 				</TouchableOpacity>
 			</View>
+
+			<ModalSaveConversation
+				modalVisible={modalVisible}
+				setModalVisible={setModalVisible}
+				guardarMensajes={guardarMensajes}
+			/>
 		</View>
 	);
 };
@@ -122,6 +208,27 @@ const styles = StyleSheet.create({
 		paddingRight: 15,
 	},
 	sendButtonIcon: {
+		color: Colors.secondary,
+	},
+	containerButtonSaveConversation: {
+		position: 'absolute',
+		bottom: 80,
+		right: 30,
+	},
+	// buttonSaveConversation: {
+	// 	backgroundColor: Colors.primary,
+	// 	paddingVertical: 10,
+	// 	paddingHorizontal: 30,
+	// 	borderRadius: 30,
+	// 	elevation: 2,
+	// 	shadowColor: '#000000',
+	// 	shadowOffset: {
+	// 		width: 2,
+	// 		height: 2,
+	// 	},
+	// },
+	textSaveConversation: {
+		fontFamily: 'Quicksand700',
 		color: Colors.secondary,
 	},
 });

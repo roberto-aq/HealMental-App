@@ -1,8 +1,10 @@
+import { useEffect, useState } from 'react';
 import RootNavigator from './src/navigation/RootNavigator';
 import { Provider } from 'react-redux';
 import { store } from './src/store/store';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useFonts } from 'expo-font';
+import { Text } from 'react-native';
 
 export default function App() {
 	let [fontsLoaded, fontError] = useFonts({
@@ -12,6 +14,7 @@ export default function App() {
 		Quicksand600: require('./assets/fonts/Quicksand-SemiBold.ttf'),
 		Quicksand700: require('./assets/fonts/Quicksand-Bold.ttf'),
 	});
+
 
 	if (!fontsLoaded && !fontError) {
 		return null;

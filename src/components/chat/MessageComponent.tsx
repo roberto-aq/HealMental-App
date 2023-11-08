@@ -15,39 +15,52 @@ const imagesAvatar = {
 
 const MessageComponent = ({ item }) => {
 	const { usuario } = useSelector((state: RootState) => state.auth);
+	const { error } = useSelector((state: RootState) => state.chat);
 
 	return (
-		<View
-			style={[
-				styles.rowMessage,
-				item.isUser && {
-					justifyContent: 'flex-start',
-					flexDirection: 'row-reverse',
-				},
-			]}
-		>
-			<View style={styles.containerAvatar}>
-				<Image
-					source={
-						item.isUser
-							? imagesAvatar[usuario.avatar]
-							: require('../../../assets/paxi-outline.png')
-					}
-					style={styles.imageAvatar}
-				/>
-			</View>
-			<View
-				style={[
-					styles.containerMessage,
-					item.isUser && { backgroundColor: Colors.tertiary },
-				]}
-			>
-				<Text style={styles.name}>
-					{item.isUser ? usuario.nombreUsuario : 'Paxi'}
-				</Text>
-				<Text style={styles.textMessage}>{item.text}</Text>
-			</View>
-		</View>
+		<>
+			{error ? (
+				<View>
+					<Text>{error}</Text>
+				</View>
+			) : (
+				<View
+					style={[
+						styles.rowMessage,
+						item.role === 'user'
+							? {
+									justifyContent: 'flex-start',
+									flexDirection: 'row-reverse',
+							  }
+							: {},
+					]}
+				>
+					<View style={styles.containerAvatar}>
+						<Image
+							source={
+								item.role === 'user'
+									? imagesAvatar[usuario.avatar]
+									: require('../../../assets/paxi-outline.png')
+							}
+							style={styles.imageAvatar}
+						/>
+					</View>
+					<View
+						style={[
+							styles.containerMessage,
+							item.role === 'user'
+								? { backgroundColor: Colors.tertiary }
+								: {},
+						]}
+					>
+						<Text style={styles.name}>
+							{item.role === 'user' ? usuario.nombreUsuario : 'Paxi'}
+						</Text>
+						<Text style={styles.textMessage}>{item.text}</Text>
+					</View>
+				</View>
+			)}
+		</>
 	);
 };
 
@@ -87,11 +100,12 @@ const styles = StyleSheet.create({
 	name: {
 		textTransform: 'capitalize',
 		fontFamily: 'Quicksand700',
-		fontSize: 16,
-		color: Colors.light,
+		fontSize: 18,
+		color: Colors.secondary,
 	},
 	textMessage: {
-		color: Colors.light,
+		color: Colors.secondary,
 		fontFamily: 'Quicksand500',
+		fontSize: 18,
 	},
 });

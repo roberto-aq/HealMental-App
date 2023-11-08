@@ -30,7 +30,8 @@ export default HeaderTab;
 
 const styles = StyleSheet.create({
 	container: {
-		marginTop: StatusBar.currentHeight,
+		// marginTop: StatusBar.currentHeight,
+		paddingTop: StatusBar.currentHeight,
 		paddingVertical: 20,
 		backgroundColor: Colors.primary,
 		justifyContent: 'space-between',
@@ -39,14 +40,14 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 30,
 	},
 	text: {
-		color: '#fff',
+		color: Colors.secondary,
 		fontWeight: '700',
 		fontSize: 16,
 	},
 	iconBack: {
-		color: '#fff',
+		color: Colors.secondary,
 	},
 	iconInfo: {
-		color: '#fff',
+		color: Colors.secondary,
 	},
 });

@@ -1,16 +1,33 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { Ejercicio } from '../../../interfaces/ejercicioApi';
 
+export interface Profesional {
+	id: string;
+	nombres: string;
+	especialidad: string;
+	telefono: string;
+	correo: string;
+	horariosDisponibles: HorariosDisponible[] | null;
+}
+
+export interface HorariosDisponible {
+	dia: string;
+	horaInicio: string;
+	horaFin: string;
+}
+
 interface EjerciciosFavoritosProps {
 	ejerciciosFavoritos: Ejercicio[];
 	isLoading: boolean;
+	profesionales: Profesional[];
 }
 
 export const perfilSlice = createSlice({
-	name: 'notas',
+	name: 'perfil',
 	initialState: {
 		ejerciciosFavoritos: [],
 		isLoading: false,
+		profesionales: [],
 	} as EjerciciosFavoritosProps,
 	reducers: {
 		startLoading: state => {
@@ -33,6 +50,10 @@ export const perfilSlice = createSlice({
 			);
 			state.isLoading = false;
 		},
+		getProfesionales: (state, { payload }) => {
+			state.profesionales = payload;
+			state.isLoading = false;
+		},
 	},
 });
 
@@ -41,5 +62,6 @@ export const {
 	finishLoading,
 	getEjerciciosFavoritos,
 	addEjercicioFavorito,
-	removeEjercicioFavorito
+	removeEjercicioFavorito,
+	getProfesionales,
 } = perfilSlice.actions;

@@ -4,7 +4,7 @@ import EjerciciosStack from './EjerciciosStack';
 import ChatScreen from '../screens/ChatScreen';
 import PerfilStack from './PerfilStack';
 import CalendarioScreen from '../screens/Calendario/CalendarioScreen';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { Colors } from '../constants/colors';
 import { StyleSheet } from 'react-native';
@@ -27,9 +27,15 @@ export default function AppBottomTab() {
 					/>
 				),
 				tabBarStyle: [styles.tabBarStyle],
-				tabBarShowLabel: false,
-				tabBarInactiveTintColor: Colors.light,
-				tabBarActiveTintColor: Colors.secondary,
+				// tabBarShowLabel: false,
+				tabBarInactiveTintColor: Colors.secondary,
+				tabBarActiveTintColor: Colors.tertiary,
+				tabBarLabelStyle: {
+					fontSize: 10,
+					fontFamily: 'Quicksand500',
+					bottom: 11,
+					letterSpacing: 0.5,
+				},
 			}}
 		>
 			<AppTab.Screen
@@ -39,6 +45,7 @@ export default function AppBottomTab() {
 					tabBarIcon: ({ color }) => (
 						<Ionicons name='home' color={color} size={24} />
 					),
+					tabBarLabel: 'Inicio',
 					headerShown: false,
 				}}
 			/>
@@ -47,7 +54,11 @@ export default function AppBottomTab() {
 				component={EjerciciosStack}
 				options={{
 					tabBarIcon: ({ color }) => (
-						<Entypo name='briefcase' size={24} color={color} />
+						<MaterialCommunityIcons
+							name='meditation'
+							size={24}
+							color={color}
+						/>
 					),
 					headerShown: false,
 				}}
@@ -82,9 +93,10 @@ export default function AppBottomTab() {
 				component={PerfilStack}
 				options={{
 					tabBarIcon: ({ color }) => (
-						<Ionicons name='person' color={color} size={24} />
+						<Ionicons name='settings' color={color} size={24} />
 					),
 					headerShown: false,
+					title: 'Configuración',
 				}}
 			/>
 		</AppTab.Navigator>

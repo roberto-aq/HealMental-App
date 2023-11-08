@@ -11,9 +11,6 @@ import Input from '../components/auth/InputText';
 import { Colors } from '../constants/colors';
 import ButtonForm from '../components/auth/ButtonForm';
 import ContainerLogo from '../components/ContainerLogo';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
-import { API_URL } from '@env';
 import { useDispatch } from 'react-redux';
 import { loginWithEmailPassword } from '../store/slices/auth/thunks';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -90,7 +87,7 @@ const LoginScreen = ({ navigation }) => {
 					labelButton='Iniciar Sesión'
 					onPress={login}
 					backgroundColor={Colors.primary}
-					textColor='#fff'
+					textColor={Colors.secondary}
 				/>
 				<View style={styles.containerSeparator}>
 					<View style={styles.separator}></View>
@@ -102,8 +99,8 @@ const LoginScreen = ({ navigation }) => {
 				<ButtonForm
 					labelButton='Continuar con Google'
 					onPress={() => navigation.navigate('AppHome')}
-					backgroundColor='#E0FBFC'
-					textColor='#000'
+					backgroundColor={Colors.primary}
+					textColor={Colors.secondary}
 				/>
 			</View>
 
@@ -163,14 +160,15 @@ const styles = StyleSheet.create({
 		gap: 5,
 	},
 	finalText: {
-		fontSize: 13,
+		fontSize: 14,
 		justifyContent: 'center',
 		alignItems: 'center',
 		fontFamily: 'Quicksand500',
 	},
 	finalTextLink: {
-		color: Colors.primary,
-		fontSize: 13,
+		color: Colors.secondary,
+		fontSize: 14,
 		fontFamily: 'Quicksand700',
+		textDecorationLine: 'underline',
 	},
 });

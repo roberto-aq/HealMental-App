@@ -41,3 +41,39 @@ export const emocionesImages: emocionesImagesProps = {
 	Motivado: require('../../assets/emojis-calendario/icono-motivado.png'),
 	Ansioso: require('../../assets/emojis-calendario/icono-ansioso.png'),
 };
+
+// OBTENER COLORES ALEATORIOS PARA NOTAS
+export const coloresAleatorios = [
+	'#FFC8DD',
+	'#E6F8B2',
+	'#CDB4DB',
+	'#A5FFD6',
+];
+export const obtenerColorAleatorio = (colores: string[]) => {
+	const indiceAleatorio = Math.floor(Math.random() * colores.length);
+	return colores[indiceAleatorio];
+};
+
+// VALIDAR CARACTERES ESPECiALES PAXI - NO ESTA CORRECTO, HAY QUE MEJORARLO
+export const contieneCaracteresEspeciales = (texto: string) => {
+	// Definir los caracteres que deseas permitir. Agrega o elimina según sea necesario.
+	const regexp = /^[a-zA-Z0-9 .,!?]*$/;
+	return !regexp.test(texto);
+};
+
+// VALIDAR FORMATO DE CELULAR
+export const formatInternationalNumber = (
+	number: string,
+	callingCode: string
+) => {
+	// Si el número ya comienza con el código de país, devolverlo tal cual
+	if (number.startsWith(callingCode)) {
+		return `+${number}`;
+	}
+
+	// Remover cero inicial si lo hay (asumiendo que todos los números se introducen en formato local)
+	const numberWithoutZeroPrefix = number.replace(/^0+/, '');
+
+	// Retornar el número formateado con el código de país
+	return `${callingCode}${numberWithoutZeroPrefix}`;
+};

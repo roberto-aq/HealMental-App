@@ -49,7 +49,7 @@ export const registerThunk = ({
 	nombreUsuario,
 	email,
 	password,
-	navigate,
+	contactoEmergencia,
 }) => {
 	return async (dispatch: Dispatch) => {
 		dispatch(start());
@@ -59,6 +59,7 @@ export const registerThunk = ({
 				email,
 				password,
 				nombreUsuario,
+				contactoEmergencia,
 			});
 			dispatch(
 				register({
@@ -72,7 +73,6 @@ export const registerThunk = ({
 				'@nombreUsuario',
 				data.nombreUsuario
 			);
-			navigate('FormularioInicial');
 			return null;
 		} catch (error: any) {
 			console.log(error.response.data);

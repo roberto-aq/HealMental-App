@@ -60,6 +60,7 @@ export const authSlice = createSlice({
 			state.nombreUsuario = '';
 			state.firstLogin = true;
 			state.usuario = {};
+			state.isLoading = false;
 		},
 		tokenExpired: state => {
 			state.status = 'not-authenticated';

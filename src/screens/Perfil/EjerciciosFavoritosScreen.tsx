@@ -28,7 +28,10 @@ const EjerciciosFavoritosScreen = () => {
 	return (
 		<View style={[globalStyles.screenContainer, styles.container]}>
 			{ejerciciosFavoritos.length ? (
-				<EjerciciosFavoritosList ejercicios={ejerciciosFavoritos} />
+				<EjerciciosFavoritosList
+					ejercicios={ejerciciosFavoritos}
+					vertical={true}
+				/>
 			) : (
 				<NotFoundEjerciciosFavoritos />
 			)}

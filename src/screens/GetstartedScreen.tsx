@@ -19,6 +19,10 @@ const GetstartedScreen = ({ navigation }) => {
 					source={require('../../assets/icon_healmental.png')}
 					style={styles.iconLogo}
 				/>
+				<Image
+					source={require('../../assets/Logo.png')}
+					style={styles.iconLogoHealmental}
+				/>
 				{/* <SvgUri uri={require('../../assets/logo_healMental.svg')} /> */}
 			</View>
 			<Text style={styles.headerTitle}>
@@ -30,7 +34,7 @@ const GetstartedScreen = ({ navigation }) => {
 					style={[styles.button, styles.buttonLogin]}
 					onPress={() => navigation.navigate('Register')}
 				>
-					<Text style={styles.textButtonLogin}>Soy nuevo Aquí</Text>
+					<Text style={styles.textButtonLogin}>Soy nuevo</Text>
 				</TouchableOpacity>
 				<TouchableOpacity
 					style={[styles.button, styles.buttonRegister]}
@@ -63,6 +67,10 @@ const styles = StyleSheet.create({
 		width: 120,
 		height: 120,
 	},
+	iconLogoHealmental: {
+		position: 'absolute',
+		top: 35,
+	},
 	textLogo: {
 		bottom: 50,
 		width: '100%',
@@ -70,12 +78,13 @@ const styles = StyleSheet.create({
 	},
 
 	headerTitle: {
-		color: '#fff',
-		fontSize: 20,
+		color: Colors.secondary,
+		fontSize: 26,
 		fontFamily: 'Quicksand700',
 		width: '90%',
 		textAlign: 'center',
-		lineHeight: 30,
+		lineHeight: 35,
+		paddingTop: 30,
 	},
 	containerButtons: {
 		marginBottom: 20,

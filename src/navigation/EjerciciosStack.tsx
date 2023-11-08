@@ -27,6 +27,7 @@ export default function EjerciciosStack() {
 			<Stack.Screen
 				name='DetalleEjercicio'
 				component={EjercicioDetalleScreen}
+				options={{ title: ' ' }}
 			/>
 		</Stack.Navigator>
 	);

@@ -1,0 +1,27 @@
+{
+	"cli": {
+		"version": ">= 5.6.0"
+	},
+	"build": {
+		"development": {
+			"developmentClient": true,
+			"distribution": "internal"
+		},
+		"preview": {
+			"ios": {
+				"simulator": true
+			},
+			"android": {
+				"buildType": "apk"
+			},
+			"env": {
+				"API_URL": "https://healmentalapi-production.up.railway.app/api",
+				"API_KEY_OPENAI": "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"
+			}
+		},
+		"production": {}
+	},
+	"submit": {
+		"production": {}
+	}
+}

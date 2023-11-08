@@ -222,7 +222,7 @@ const styles = StyleSheet.create({
 	contentNotaDelDia: {
 		fontFamily: 'Quicksand500',
 		fontSize: 16,
-		color: Colors.light,
+		color: Colors.secondary,
 	},
 	containerDesencadenante: {
 		gap: 15,
@@ -247,7 +247,7 @@ const styles = StyleSheet.create({
 	contentDesencadenante: {
 		fontFamily: 'Quicksand500',
 		fontSize: 16,
-		color: Colors.light,
+		color: Colors.secondary,
 	},
 	containerEtiquetas: {
 		alignItems: 'center',

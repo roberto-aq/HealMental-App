@@ -70,6 +70,6 @@ const styles = StyleSheet.create({
 	textButton: {
 		color: Colors.secondary,
 		fontSize: 13,
-		fontWeight: '300',
+		fontFamily: 'Quicksand400',
 	},
 });

@@ -4,6 +4,7 @@ import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import AppBottomTab from './AppBottomTab';
 import FormularioInicial from '../screens/FormularioInicial';
+import CelularScreen from '../screens/CelularScreen';
 
 const Stack = createStackNavigator();
 
@@ -21,6 +22,7 @@ export default function InitialStack() {
 				name='FormularioInicial'
 				component={FormularioInicial}
 			/>
+			<Stack.Screen name='ContactoEmergencia' component={CelularScreen} />
 			<Stack.Screen name='AppHome' component={AppBottomTab} />
 		</Stack.Navigator>
 	);

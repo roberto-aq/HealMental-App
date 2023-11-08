@@ -66,8 +66,13 @@ export default function RootNavigator() {
 	useEffect(() => {
 		getToken();
 		getNombreUsuario();
-		getUserAutenticado();
 	}, []);
+
+	useEffect(() => {
+		if (userToken) {
+			getUserAutenticado();
+		}
+	}, [userToken]); // este useEffect se ejecutará cada vez que el token cambie
 
 	if (isLoading) {
 		return <Splash />;

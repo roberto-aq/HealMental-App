@@ -5,6 +5,8 @@ import HeaderTab from '../components/HeaderTab';
 import NotaIndividualScreen from '../screens/Perfil/NotaIndividualScreen';
 import EjerciciosFavoritosScreen from '../screens/Perfil/EjerciciosFavoritosScreen';
 import DatosPersonalesScreen from '../screens/Perfil/DatosPersonalesScreen';
+import ProfesionalListScreen from '../screens/Perfil/ProfesionalListScreen';
+import ProfesionalDetailsScreen from '../screens/Perfil/ProfesionalDetailsScreen';
 
 const Stack = createStackNavigator();
 
@@ -26,13 +28,14 @@ export default function PerfilStack() {
 				name='Home'
 				component={PerfilScreen}
 				options={{
-					title: 'Perfil',
+					title: 'Configuración',
 				}}
 			/>
 			<Stack.Screen name='Notas' component={NotasScreen} />
 			<Stack.Screen
 				name='NotaIndividual'
 				component={NotaIndividualScreen}
+				options={{ title: ' ' }}
 			/>
 			<Stack.Screen
 				name='EjerciciosFavoritos'
@@ -42,6 +45,16 @@ export default function PerfilStack() {
 				name='DatosPersonales'
 				component={DatosPersonalesScreen}
 				options={{ title: 'Datos Personales' }}
+			/>
+			<Stack.Screen
+				name='ProfesionalesList'
+				component={ProfesionalListScreen}
+				options={{ title: 'Lista de Profesionales' }}
+			/>
+			<Stack.Screen
+				name='ProfesionalDetails'
+				component={ProfesionalDetailsScreen}
+				options={{ title: ' ' }}
 			/>
 		</Stack.Navigator>
 	);

@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 	},
 	title: {
-		fontWeight: '700',
+		fontFamily: 'Quicksand700',
 		color: Colors.secondary,
 		textAlign: 'center',
 		fontSize: 22,

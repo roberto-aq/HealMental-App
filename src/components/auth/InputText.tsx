@@ -1,5 +1,6 @@
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { InputText } from '../../interfaces/auth';
+import { Colors } from '../../constants/colors';
 
 const Input: React.FC<InputText> = ({
 	label,
@@ -30,6 +31,7 @@ const styles = StyleSheet.create({
 	text: {
 		fontFamily: 'Quicksand700',
 		textTransform: 'capitalize',
+		color: Colors.secondary,
 	},
 
 	input: {

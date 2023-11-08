@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
 		shadowRadius: 5,
 		shadowOpacity: 0.35,
 		elevation: 3,
-		backgroundColor: '#fff',
+		backgroundColor: Colors.secondary,
 		borderRadius: 500,
 	},
 	iconButtonClose: {

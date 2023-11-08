@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
 	},
 	title: {
 		color: '#fff',
-		fontWeight: 'bold',
+		fontFamily: 'Quicksand700',
 		fontSize: 14,
 	},
 	content: {
@@ -37,5 +37,6 @@ const styles = StyleSheet.create({
 		fontSize: 13,
 		textAlign: 'center',
 		lineHeight: 20,
+		fontFamily: 'Quicksand500',
 	},
 });
